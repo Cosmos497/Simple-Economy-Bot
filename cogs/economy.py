@@ -17,8 +17,9 @@ class currency(commands.Cog):
     async def on_ready(self):
         self.bot.db = await aiosqlite.connect("myDB.db")
         await self.bot.db.execute("CREATE TABLE IF NOT EXISTS userCurrency (user_id int, coins int, PRIMARY KEY (user_id))") # Creates a table inside of our Database called userCurrency
-        print("currency cog Is working")
 
+        print("Economy Cog Is Working")
+        
 
     @commands.command()
     @cooldown(1, 60*60*24, commands.BucketType.user)
