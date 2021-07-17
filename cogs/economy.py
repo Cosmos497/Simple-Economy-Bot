@@ -70,10 +70,7 @@ class currency(commands.Cog):
             if amt == None:
                 await ctx.send(f"You have to send at least ``1`` Coin to another user! {user.name}")
                 
-
-
             amt = int(amt)
-
 
             await self.bot.db.execute("INSERT OR IGNORE INTO userCurrency (user_id, coins) VALUES (?,?)", (ctx.author.id, 1))
             await self.bot.db.execute("INSERT OR IGNORE INTO userCurrency (user_id, coins) VALUES (?,?)", (user.id, 1))
@@ -96,7 +93,6 @@ class currency(commands.Cog):
                 await self.bot.db.execute(f"UPDATE userCurrency SET coins = coins - {amt} WHERE user_id = {ctx.author.id}")
                 await self.bot.db.execute(f"UPDATE userCurrency SET coins = coins + {amt} WHERE user_id = {user.id}")
                 
-
                 await ctx.send(f"{ctx.author.mention} has sent {amt} coins to {user.mention}")
 
             await self.bot.db.commit()
@@ -151,8 +147,6 @@ class currency(commands.Cog):
 
             await self.bot.db.commit()
 
-
-
         except Exception as e:
             print(e)
             await ctx.send("There was an issue with this command.\nIf this continues, please join our help server!")
@@ -201,9 +195,6 @@ class currency(commands.Cog):
             await ctx.send("There was an issue with this command.\nIf this continues, please join our help server!")
 
         
-    @commands.command(aliases=['baltop', 'rich'])
-    async def richest_players(self, ctx):
-        pass
 
 def setup(bot):
     bot.add_cog(currency(bot))
