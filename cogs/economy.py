@@ -19,11 +19,14 @@ class currency(commands.Cog):
         await self.bot.db.execute("CREATE TABLE IF NOT EXISTS userCurrency (user_id int, coins int, PRIMARY KEY (user_id))") # Creates a table inside of our Database called userCurrency
 
         print("Economy Cog Is Working")
-        
+
+    @commands.command()
+    async def tester(self, ctx):
+        await ctx.send("This is a test.")
 
     @commands.command()
     @cooldown(1, 60*60*24, commands.BucketType.user)
-    async def daily(self, ctx,):
+    async def daily(self, ctx):
         try:
             await self.bot.db.execute("INSERT OR IGNORE INTO userCurrency (user_id, coins) VALUES (?,?)", (ctx.author.id, 1))
             amt = random.randint(5,15)
@@ -44,8 +47,6 @@ class currency(commands.Cog):
                 user = ctx.author
 
             await self.bot.db.execute("INSERT OR IGNORE INTO userCurrency (user_id, coins) VALUES (?,?)", (user.id, 1))
-            
-
 
             async with self.bot.db.execute(f"SELECT coins FROM userCurrency WHERE user_id = {user.id}") as cursor:
                 data = await cursor.fetchone()
@@ -87,7 +88,6 @@ class currency(commands.Cog):
 
             elif amt < 1:
                 await ctx.send("You need to send at least ``1`` Coin!")
-                
             
             
             if balance > 0:
